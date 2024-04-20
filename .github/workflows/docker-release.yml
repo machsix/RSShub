@@ -94,6 +94,7 @@ jobs:
       - name: Extract Docker metadata (Chromium-bundled version)
         id: meta-chromium-bundled
         uses: docker/metadata-action@v5
+        if: ${{ false }}
         with:
           images: |
             ${{ secrets.DOCKER_USERNAME }}/rsshub
@@ -107,6 +108,7 @@ jobs:
       - name: Build and push Docker image (Chromium-bundled version)
         id: build-and-push-chromium
         uses: docker/build-push-action@v6
+        if: ${{ false }}
         with:
           context: .
           build-args: PUPPETEER_SKIP_DOWNLOAD=0
@@ -119,7 +121,7 @@ jobs:
           cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled  # inline cache is enough
 
       - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ false }}
         env:
           COSIGN_EXPERIMENTAL: 'true'
         run: echo "${{ steps.meta-chromium-bundled.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-chromium.outputs.digest }}
