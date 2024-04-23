@@ -24,6 +24,7 @@ COPY ./package.json /app/
 RUN \
     set -ex && \
     export PUPPETEER_SKIP_DOWNLOAD=true && \
+    npm install -g pnpm@9.0.2 && \
     pnpm install --frozen-lockfile && \
     pnpm rb
 
